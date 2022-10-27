@@ -1,4 +1,6 @@
 (function(window, document, undefined){
+    "use strict";
+
     let myLibrary = [];
 
     let testBook1 = new Book("Joe Brown", "Brave", 200);
@@ -9,6 +11,23 @@
 
     // TODO: function that loops through array and displays 
     // each book in a table or on their own "card"
+    myLibrary.forEach(function(book){
+        let library = document.querySelector(".library");
+
+        let newDiv = document.createElement("div");
+
+        let newTitle = document.createElement("h1");
+        newTitle.classList.add("title");
+        newTitle.append(document.createTextNode(book.title));
+        
+        let newAuthor = document.createElement("div");
+        newAuthor.classList.add("author");
+        newAuthor.append(document.createTextNode(book.author));
+
+        newDiv.append(newTitle, newAuthor);
+        library.append(newDiv);
+        
+    })
 
     // TODO: add event listener for "ADD BOOK" button
     // TODO: add event listener to remove book
