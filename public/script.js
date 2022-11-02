@@ -18,11 +18,14 @@
 
         let newTitle = document.createElement("h1");
         newTitle.classList.add("title");
-        newTitle.append(document.createTextNode(book.title));
+        newTitle.textContent = book.title;
         
         let newAuthor = document.createElement("div");
         newAuthor.classList.add("author");
-        newAuthor.append(document.createTextNode(book.author));
+        newAuthor.textContent = book.author;
+
+        let readButton = document.createElement("button");
+        readButton.textContent = "Read";
 
         newDiv.append(newTitle, newAuthor);
         library.append(newDiv);
