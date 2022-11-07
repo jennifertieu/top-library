@@ -8,35 +8,62 @@
     
     addBookToLibrary(testBook1);
     addBookToLibrary(testBook2);
+    displayLibrary();
 
     // TODO: function that loops through array and displays 
     // each book in a table or on their own "card"
-    myLibrary.forEach(function(book){
-        let library = document.querySelector(".library");
+    function displayLibrary(){
+        myLibrary.forEach((book, index) => {
+            let library = document.getElementById("library");
 
-        let newDiv = document.createElement("div");
+            let newDiv = document.createElement("div");
+            newDiv.classList.add("book");
+            newDiv.setAttribute("data-library-index", index);
 
-        let newTitle = document.createElement("h1");
-        newTitle.classList.add("title");
-        newTitle.textContent = book.title;
-        
-        let newAuthor = document.createElement("div");
-        newAuthor.classList.add("author");
-        newAuthor.textContent = book.author;
+            let newTitle = document.createElement("h1");
+            newTitle.classList.add("title");
+            newTitle.textContent = book.title;
+            
+            let newAuthor = document.createElement("div");
+            newAuthor.classList.add("author");
+            newAuthor.textContent = book.author;
 
-        let readButton = document.createElement("button");
-        readButton.textContent = "Read";
+            let readButton = document.createElement("button");
+            readButton.textContent = "Read";
 
-        newDiv.append(newTitle, newAuthor);
-        library.append(newDiv);
-        
+            let removeButton = document.createElement("button");
+            removeButton.classList.add("btn", "remove-btn");
+            removeButton.textContent = "Remove";
+
+            newDiv.append(newTitle, newAuthor, readButton, removeButton);
+            library.append(newDiv);
+        });
+    }
+
+    // add new book
+    document.getElementById("addBookForm").addEventListener("submit", function(event){
+        let newBook = new Book(event.target.Title.value, event.target.Author.value, event.target.Pages.value);
+        addBookToLibrary(newBook); 
+        removeAllChildNodes(document.getElementById("library"));
+        displayLibrary();
+        return event.preventDefault();
+    });
+
+    // remove book
+    Array.from(document.getElementsByClassName("remove-btn")).forEach(function(button){
+        button.addEventListener("click", function(event){
+            let bookIndex = this.parentElement.getAttribute("data-library-index");
+            console.log(bookIndex);
+            removeBookFromLibrary(bookIndex); 
+            removeAllChildNodes(document.getElementById("library"));
+            displayLibrary();
+            return event.preventDefault();
+        });
+
     })
-
-    // TODO: add event listener for "ADD BOOK" button
-    // TODO: add event listener to remove book
     // TOOD: create function that toggles a book read status on Book's prototype isntance
 
-    function Book(author, title, pages) {
+    function Book(title, author, pages) {
         this.author = author;
         this.title = title;
         this.numberOfPages = pages;
@@ -48,11 +75,20 @@
         console.log(this.isRead);
     }
 
+    // add book to library
     function addBookToLibrary(book) {
         myLibrary.push(book);
     }
     
-    function removeBookFromLibrary(book) {
-        myLibrary.filter(libBook => libBook !== book);
+    // remove book from library
+    function removeBookFromLibrary(bookIndex) {
+        myLibrary.splice(bookIndex, 1);
+    }
+
+    // move library nodes
+    function removeAllChildNodes(parent){
+        while (parent.firstChild){
+            parent.removeChild(parent.firstChild);
+        }
     }
 })(window, document);
