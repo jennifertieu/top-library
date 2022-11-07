@@ -29,6 +29,7 @@
             newAuthor.textContent = book.author;
 
             let readButton = document.createElement("button");
+            readButton.classList.add("btn", "read-btn");
             readButton.textContent = "Read";
 
             let removeButton = document.createElement("button");
@@ -53,7 +54,6 @@
     Array.from(document.getElementsByClassName("remove-btn")).forEach(function(button){
         button.addEventListener("click", function(event){
             let bookIndex = this.parentElement.getAttribute("data-library-index");
-            console.log(bookIndex);
             removeBookFromLibrary(bookIndex); 
             removeAllChildNodes(document.getElementById("library"));
             displayLibrary();
@@ -61,7 +61,13 @@
         });
 
     })
-    // TOOD: create function that toggles a book read status on Book's prototype isntance
+    // toggles a book read status on Book's prototype isntance
+    Array.from(document.getElementsByClassName("read-btn")).forEach(function(button){
+        button.addEventListener("click", function(event){
+            let bookIndex = this.parentElement.getAttribute("data-library-index");
+            myLibrary[bookIndex].read();
+        })
+    })
 
     function Book(title, author, pages) {
         this.author = author;
