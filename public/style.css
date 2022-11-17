@@ -1,0 +1,11 @@
+#library {
+    display: grid;
+    grid-template: 1fr / repeat(3, 1fr);
+}
+
+.book {
+    border: 1px solid #000;
+    background-color: blue;
+    text-align: center;
+    height: 400px;
+}
