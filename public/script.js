@@ -3,8 +3,8 @@
 
     let myLibrary = [];
 
-    let testBook1 = new Book("Joe Brown", "Brave", 200);
-    let testBook2 = new Book("Kat Tran", "Goodbye", 200);
+    let testBook1 = new Book("Brave", "Joe Brown", 200);
+    let testBook2 = new Book("Goodbye", "Kat Tran", 200);
     
     addBookToLibrary(testBook1);
     addBookToLibrary(testBook2);
