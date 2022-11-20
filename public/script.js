@@ -19,6 +19,7 @@
             let newDiv = document.createElement("div");
             newDiv.classList.add("book");
             newDiv.setAttribute("data-library-index", index);
+            newDiv.style.backgroundColor = book.color = "#" + generateRandomHex();
 
             let newTitle = document.createElement("h1");
             newTitle.classList.add("title");
@@ -39,6 +40,12 @@
             newDiv.append(newTitle, newAuthor, readButton, removeButton);
             library.append(newDiv);
         });
+    }
+
+    // TODO: generate random hex
+    function generateRandomHex(){
+        let randomColor = Math.floor(Math.random()*16777215).toString(16);
+        return randomColor;
     }
 
     // add new book
@@ -74,6 +81,7 @@
         this.title = title;
         this.numberOfPages = pages;
         this.isRead = false;
+        this.color = "#000";
     }
 
     Book.prototype.read = function(){
