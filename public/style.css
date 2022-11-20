@@ -1,3 +1,8 @@
+main {
+    display: flex;
+    flex-direction: column;
+}
+
 #library {
     display: grid;
     grid-template: 1fr / repeat(3, 1fr);
@@ -8,4 +13,45 @@
     background-color: blue;
     text-align: center;
     height: 400px;
+}
+
+.author {
+    margin-bottom: 3.5rem;
+}
+
+.add-btn {
+    margin: 8px 0;
+}
+
+.btn {
+    padding: 3px 5px;
+}
+
+.btn-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0 30px;
+}
+
+.form-container {
+    padding: 1.5rem 6rem;
+}
+
+.form-container h1 {
+    margin: 0;
+    text-align: center;
+}
+
+#addBookForm {
+    display: flex;
+    flex-direction: column;
+}
+
+input {
+    margin-bottom: 10px;
+}
+
+.status {
+    margin-top: 2rem;
 }

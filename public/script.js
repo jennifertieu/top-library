@@ -3,11 +3,6 @@
 
     let myLibrary = [];
 
-    let testBook1 = new Book("Brave", "Joe Brown", 200);
-    let testBook2 = new Book("Goodbye", "Kat Tran", 200);
-    
-    addBookToLibrary(testBook1);
-    addBookToLibrary(testBook2);
     displayLibrary();
 
     // TODO: function that loops through array and displays 
@@ -32,49 +27,30 @@
             let readButton = document.createElement("button");
             readButton.classList.add("btn", "read-btn");
             readButton.textContent = "Read";
+            readButton.addEventListener("click", readBookListener);
 
             let removeButton = document.createElement("button");
             removeButton.classList.add("btn", "remove-btn");
             removeButton.textContent = "Remove";
+            removeButton.addEventListener("click", removeBookListener);
+            
+            let buttonContainer = document.createElement("div");
+            buttonContainer.classList.add("btn-container");
 
-            newDiv.append(newTitle, newAuthor, readButton, removeButton);
+            buttonContainer.append(readButton, removeButton)
+
+            let status = document.createElement("div");
+            status.classList.add("status");
+            status.textContent = book.isRead ? "Status: Completed" : "Status: Not Read";
+
+            newDiv.append(newTitle, newAuthor, buttonContainer, status);
             library.append(newDiv);
-        });
-    }
 
-    // TODO: generate random hex
-    function generateRandomHex(){
-        let randomColor = Math.floor(Math.random()*16777215).toString(16);
-        return randomColor;
+        });
     }
 
     // add new book
-    document.getElementById("addBookForm").addEventListener("submit", function(event){
-        let newBook = new Book(event.target.Title.value, event.target.Author.value, event.target.Pages.value);
-        addBookToLibrary(newBook); 
-        removeAllChildNodes(document.getElementById("library"));
-        displayLibrary();
-        return event.preventDefault();
-    });
-
-    // remove book
-    Array.from(document.getElementsByClassName("remove-btn")).forEach(function(button){
-        button.addEventListener("click", function(event){
-            let bookIndex = this.parentElement.getAttribute("data-library-index");
-            removeBookFromLibrary(bookIndex); 
-            removeAllChildNodes(document.getElementById("library"));
-            displayLibrary();
-            return event.preventDefault();
-        });
-
-    })
-    // toggles a book read status on Book's prototype isntance
-    Array.from(document.getElementsByClassName("read-btn")).forEach(function(button){
-        button.addEventListener("click", function(event){
-            let bookIndex = this.parentElement.getAttribute("data-library-index");
-            myLibrary[bookIndex].read();
-        })
-    })
+    document.getElementById("addBookForm").addEventListener("submit", addBookListener);
 
     function Book(title, author, pages) {
         this.author = author;
@@ -86,7 +62,29 @@
 
     Book.prototype.read = function(){
         this.isRead = !this.isRead;
-        console.log(this.isRead);
+    }
+
+    function addBookListener(event){
+        let newBook = new Book(event.target.Title.value, event.target.Author.value, event.target.Pages.value);
+        addBookToLibrary(newBook); 
+        removeAllChildNodes(document.getElementById("library"));
+        displayLibrary();
+        return event.preventDefault();
+    }
+
+    function removeBookListener(event){
+        let bookIndex = event.target.closest(".book").getAttribute("data-library-index");
+        removeBookFromLibrary(bookIndex); 
+        removeAllChildNodes(document.getElementById("library"));
+        displayLibrary();
+        return event.preventDefault();
+    }
+
+    function readBookListener(event){
+        let bookIndex = event.target.closest(".book").getAttribute("data-library-index");
+        myLibrary[bookIndex].read();
+        let status = event.target.closest(".book").querySelector(".status");
+        status.textContent = myLibrary[bookIndex].isRead ? "Status: Completed" : "Status: Not Read";
     }
 
     // add book to library
@@ -104,5 +102,11 @@
         while (parent.firstChild){
             parent.removeChild(parent.firstChild);
         }
+    }
+    
+    // generate random hex
+    function generateRandomHex(){
+        let randomColor = Math.floor(Math.random()*16777215).toString(16);
+        return randomColor;
     }
 })(window, document);

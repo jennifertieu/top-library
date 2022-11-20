@@ -10,16 +10,21 @@
 <body>
     <noscript>JavaScript is required to run this page</noscript>
     <!-- Display Books-->
-    <main id="library"></main>
-    <form id="addBookForm" method="post">
-        <label for="title">Title</label>
-        <input id="title" name="Title" value="">
-        <label for="author">Author</label>
-        <input id="author" name="Author" value="">
-        <label for="pages">Number of Pages</label>
-        <input id="pages" name="Pages" value="">
-        <button type="submit" class="btn add-btn">Add Book</button>
-    </form>
+    <main>
+        <section class="form-container">
+            <h1>Add Book</h1>
+            <form id="addBookForm" method="post">
+                <label for="title">Title</label>
+                <input id="title" name="Title" value="">
+                <label for="author">Author</label>
+                <input id="author" name="Author" value="">
+                <label for="pages">Number of Pages</label>
+                <input id="pages" name="Pages" value="">
+                <button type="submit" class="btn add-btn">Add Book</button>
+            </form>
+        </section>
+        <section id="library"></section>
+    </main>
     <script type="text/javascript" src="script.js"></script>    
 </body>
 </html>
